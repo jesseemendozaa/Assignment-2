@@ -10,33 +10,35 @@
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
 
 #define MAX_NAMES 100 // 100 distinct names
 #define MAX_NAME_LENGTH 31
 #define LINE_BUFFER_SIZE 256
 
 
-static void redirect(void)
+static void redirect_pid_files(void)
 {
-    char out[64];
-    char errName[64];
+    char out[64], err[64];
 
     snprintf(out, sizeof(out), "%d.out", getpid());
-    snprintf(errName, sizeof(errName), "%d.err", getpid());
+    snprintf(err, sizeof(err), "%d.err", getpid());
 
-    close(STDOUT_FILENO);
-    open(out, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+    int fdout = open(out, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+    if (fdout >= 0) {
+        dup2(fdout, STDOUT_FILENO);
+        close(fdout);
+    }
 
-    close(STDERR_FILENO);
-    open(errName, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+    int fderr = open(err, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+    if (fderr >= 0) {
+        dup2(fderr, STDERR_FILENO);
+        close(fderr);
+    }
 }
 
 int main(int argc, char *argv[])
 {
-    redirect();
-    
+    redirect_pid_files();
     //If a file name is provvided, attempt to open it 
     FILE *fp = NULL;
     if (argc == 2)
@@ -44,7 +46,6 @@ int main(int argc, char *argv[])
         fp = fopen(argv[1], "r");
         if (fp == NULL)
         {
-            fprintf(stderr, "error: cannot open file %s\n", argv[1]);
             return 1;
         }
     }
@@ -79,9 +80,7 @@ int main(int argc, char *argv[])
         if (strlen(buffer) == 0)
         {
             if (argc == 2)
-            {
                 fprintf(stderr, "Warning - file %s line %d is empty.\n", argv[1], lineNum);
-            }
             continue;
         }
 
