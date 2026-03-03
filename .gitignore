@@ -18,3 +18,7 @@ shell1
 countnames
 shell
 
+
+# editor + macOS junk
+.vscode/
+.DS_Store
