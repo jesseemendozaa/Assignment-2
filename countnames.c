@@ -3,7 +3,14 @@
 /*
  * countnames.c
  * Reads names from a file (or stdin) and prints how many times each name appears.
+ * GitHub : https://github.com/jesseemendozaa/Assignment-2?tab=readme-ov-file
+ * Author : 
+ * Jesse Mendoza 
+ * Jada-Lien Nguyen
+ * Date modified : 03/04/2026
+ * 
  */
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -57,42 +64,43 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    // Initialize the names and counts arrays
     char names[MAX_NAMES][MAX_NAME_LENGTH];
     int counts[MAX_NAMES];
     int lengthCount = 0;
-
+    // Set all counts to 0 and names to empty strings
     for (int i = 0; i < MAX_NAMES; i++)
     {
         counts[i] = 0;
-        names[i][0] = '\0';
+        names[i][0] = '\0'; // Initialize the first character to null terminator to indicate an empty string
     }
-
+    // Read the file line by line and process the names
     char buffer[LINE_BUFFER_SIZE];
     int lineNum = 0;
-
+    // Read each line from the file until EOF
     while (fgets(buffer, LINE_BUFFER_SIZE, fp) != NULL)
     {
         lineNum++;
         // Remove newline character if present
         buffer[strcspn(buffer, "\n")] = '\0';
 
-        if (strlen(buffer) == 0)
+        if (strlen(buffer) == 0)    // Check if the line is empty
         {
             if (argc == 2)
             {
-                fprintf(stderr, "Warning - file %s line %d is empty.\n", argv[1], lineNum);
+                fprintf(stderr, "Warning - file %s line %d is empty.\n", argv[1], lineNum);  // Print a warning message to stderr if the line is empty
             }
-            continue;
+            continue; // Skip empty lines
         }
 
         // Check if the name is already in the table
         int found = 0;
-        for (int i = 0; i < lengthCount; i++)
+        for (int i = 0; i < lengthCount; i++) // Loop through the existing names to check for a match
         {
-            if (strcmp(names[i], buffer) == 0)
+            if (strcmp(names[i], buffer) == 0)  // If a match is found, increment the count for that name
             {
                 counts[i]++;
-                found = 1;
+                found = 1;  // Set found to 1 to indicate that the name was found in the table
                 break;
             }
         }
