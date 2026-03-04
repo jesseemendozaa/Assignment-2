@@ -1,23 +1,54 @@
 
 /**
- * Description: This program ....
+ * Description: This assignment implements a simple UNIX shell and a name-counting
+ * program. The shell creates child processes using fork() and executes commands
+ * using exec(). The countnames program reads a file of names and counts the
+ * occurrences of each name while reporting empty lines as warnings.
  * 
- * Author names: Jada-Lien Nguyen and Jesse Mendoza 
+ * Author names: 
+ * Jada-Lien Nguyen - 
+ * Jesse Mendoza - 
  * Author emails: 
  * jada-lien.nguyen@sjsu.edu 
  * jesse.mendoza@sjsu.edu 
- * Last modified date: 2/27/2026
+ * Last modified date: 3/4/2026
  * Creation date: 2/27/2026
  **/
 
  ## Link to Output of PDF:
 
 
+
+## Purpose 
+This assignment implements a simple UNIX shell program that allows the user to execute commands and run programs as child processes. The shell reads user input, creates a child process using fork(), and executes the command using exec(). The shell also redirects standard output and error messages to .out and .err files for each process.
+
+The program countnames.c reads a file containing names and counts the occurrences of each name in the file. The output is printed to standard output and can be captured by the shell into output files.
+
+This assignment helps demonstrate how operating systems create and manage processes and how programs interact with the UNIX shell.
+
+## Directory Structure 
+Assignment/
+│
+├── shell1.c
+├── countnames.c
+├── README.md
+│
+└── test/
+    ├── names1.txt
+    ├── names2.txt
+
 ## How to Compile Code:
 
-Navigate to the folder where countnames.c is located, then enter following command in terminal:
+Navigate to the folder where countnames.c is located, then enter the following command in the terminal::
 
-gcc -o countnames countnames.c -Wall -Werror
+gcc shell1.c -o shell
+gcc countnames.c -o countnames
+
+## To run shell 
+To run the shell:
+./shell
+Then inside the shell prompt, run:
+./countnames test/names.txt
 
 ## How to run each test case:
 
@@ -464,10 +495,10 @@ MENDOZA JESSE: 1
 ## Lessons Learned
 
 Jada Lien Nguyen-
-This assignment helped me get more comfortable working in C and understanding how programs are structured from start to finish. I practiced handling file input, working with strings in C (which is very different from higher-level languages), and managing memory carefully. It also reinforced how important it is to check for errors, especially when opening files. Overall, it helped me better understand how UNIX-style utilities are built and how small design decisions affect program behavior.
+Through this project, I learned how a simple UNIX shell operates and how the operating system creates and manages processes. I gained experience using system calls such as fork(), exec(), and wait() to execute commands entered by a user. This project helped me better understand how shells launch programs and how each command runs as a separate process. I also learned how output and error messages can be redirected into .out and .err files. Overall, this project strengthened my C programming skills and helped me practice debugging and testing programs in a UNIX environment.
 
 Jesse Mendoza - 
-This assignment helped me have a better understanding of C. Understanding how to open and process a txt file was also something I learned, as well as passing a file through the command line. My familiarity with Linux has helped me to have a better understanding of how to manage the filesystems and create new txt files for our 3 new test cases. I also learned how to troubleshoot my program in C when encountering any error / compile issues. Overall, this assignment helped me in building a better foundation.
+During this project, I learned more about how command execution works in a UNIX environment. I worked with system calls like fork() to create child processes and exec() to run programs from the shell. This helped me understand how the shell interacts with other programs and how the operating system manages multiple running processes. I also learned how to capture program output and error messages into separate files. This assignment improved my understanding of process control and reinforced important C programming concepts.
 
 ## References
 
